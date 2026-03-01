@@ -1,0 +1,11 @@
+/* Custom styles beyond Tailwind */
+.active-nav {
+    background-color: #eff6ff; /* blue-50 */
+    color: #1d4ed8; /* blue-700 */
+    border-right: 4px solid #2563eb; /* blue-600 */
+}
+
+.regex-match {
+    background-color: #fef08a; /* yellow-200 */
+    border-radius: 2px;
+}
