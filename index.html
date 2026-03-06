@@ -35,11 +35,6 @@
                         Regex Tester
                     </button>
                 </li>
-                <li>
-                    <button class="nav-btn w-full text-left px-6 py-3 hover:bg-gray-50 text-gray-700 font-medium" data-target="md5-tool">
-                        MD5 Generator
-                    </button>
-                </li>
             </ul>
         </nav>
     </aside>
@@ -97,6 +92,19 @@
                     <span class="font-medium text-blue-900">Current Unix Timestamp (s):</span>
                     <span id="current-timestamp" class="text-lg font-mono text-blue-700 font-bold"></span>
                     <button id="btn-refresh-time" class="text-blue-600 hover:text-blue-800 underline text-sm">Refresh</button>
+                    <div class="ml-auto flex items-center space-x-2">
+                        <label for="timezone-select" class="text-sm font-medium text-blue-900">Timezone:</label>
+                        <select id="timezone-select" class="p-1 border border-gray-300 rounded bg-white text-sm focus:ring-blue-500 focus:border-blue-500 max-w-[200px]">
+                            <option value="local">Local Time</option>
+                            <option value="UTC">UTC (GMT)</option>
+                            <option value="Asia/Shanghai">Asia/Shanghai (CST)</option>
+                            <option value="America/New_York">America/New_York (EST/EDT)</option>
+                            <option value="America/Los_Angeles">America/Los_Angeles (PST/PDT)</option>
+                            <option value="Europe/London">Europe/London (GMT/BST)</option>
+                            <option value="Europe/Paris">Europe/Paris (CET/CEST)</option>
+                            <option value="Asia/Tokyo">Asia/Tokyo (JST)</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -115,7 +123,7 @@
                             <button id="btn-ts-to-date" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 shadow-sm transition-colors">Convert</button>
                         </div>
                         <div>
-                            <label class="block text-sm text-gray-600 mb-1">Result Date (Local)</label>
+                            <label class="block text-sm text-gray-600 mb-1">Result Date <span id="ts-date-timezone-label" class="text-xs text-gray-400 font-normal ml-1"></span></label>
                             <input type="text" id="ts-date-result" class="w-full p-2 border border-gray-300 rounded-md bg-gray-50 font-mono" readonly>
                         </div>
                     </div>
@@ -176,29 +184,7 @@
             </div>
         </section>
 
-        <!-- MD5 Tool -->
-        <section id="md5-tool" class="tool-section hidden">
-            <h2 class="text-2xl font-semibold mb-6 text-gray-800">MD5 Generator</h2>
-            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 space-y-6">
-                <div>
-                    <label for="md5-input" class="block text-sm font-medium text-gray-700 mb-2">Input String</label>
-                    <textarea id="md5-input" rows="4" class="w-full p-4 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 font-mono text-sm"></textarea>
-                </div>
-                <div>
-                    <button id="btn-generate-md5" class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 shadow-sm transition-colors font-medium">Generate MD5 Hash</button>
-                </div>
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">MD5 (Lowercase)</label>
-                        <input type="text" id="md5-output-lower" class="w-full p-3 border border-gray-300 rounded-md bg-gray-50 font-mono text-sm text-gray-800" readonly>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">MD5 (Uppercase)</label>
-                        <input type="text" id="md5-output-upper" class="w-full p-3 border border-gray-300 rounded-md bg-gray-50 font-mono text-sm text-gray-800" readonly>
-                    </div>
-                </div>
-            </div>
-        </section>
+        
 
     </main>
 
@@ -208,6 +194,6 @@
     <script src="tools/unicode.js"></script>
     <script src="tools/timestamp.js"></script>
     <script src="tools/regex.js"></script>
-    <script src="tools/md5.js"></script>
+    
 </body>
 </html>

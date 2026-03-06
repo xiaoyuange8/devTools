@@ -10,7 +10,6 @@ This toolset provides a clean, unified interface for common daily development ta
 *   **Unicode / ASCII Converter**: Convert text between standard strings, Unicode (`\uXXXX`) representation, and ASCII codes.
 *   **Timestamp Converter**: Convert between Unix timestamps (seconds or milliseconds) and human-readable local date strings. Includes a live current timestamp display.
 *   **Regex Tester**: Test regular expressions against text with real-time highlighted match results and match counting.
-*   **MD5 Generator**: Generate MD5 hashes (both lowercase and uppercase) directly in the browser using a pure JavaScript implementation.
 
 ## How to Use
 
@@ -37,7 +36,6 @@ This toolset provides a clean, unified interface for common daily development ta
     *   `unicode.js`: Unicode and ASCII conversion logic.
     *   `timestamp.js`: Date and timestamp conversion logic.
     *   `regex.js`: Regular expression testing logic.
-    *   `md5.js`: Pure JS MD5 hash generation logic.
 
 ## License
 
