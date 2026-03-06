@@ -9,3 +9,8 @@
     background-color: #fef08a; /* yellow-200 */
     border-radius: 2px;
 }
+
+/* Override default highlight.js background to match Tailwind's bg-transparent */
+.hljs {
+    background: transparent !important;
+}
