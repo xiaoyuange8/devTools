@@ -73,8 +73,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const dateTsMsResult = document.getElementById('date-ts-ms-result');
 
     btnDateToTs.addEventListener('click', () => {
-        const val = dateInput.value.trim();
+        let val = dateInput.value.trim();
         if (!val) return;
+
+        // Auto append " 00:00:00" if the user only provides "YYYY-MM-DD"
+        if (/^\d{4}-\d{2}-\d{2}$/.test(val)) {
+            val += " 00:00:00";
+            // Optionally update the input box to show what's being evaluated
+            // dateInput.value = val;
+        }
 
         // Try parsing
         let date;
