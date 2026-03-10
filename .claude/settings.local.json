@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//d/code/AITest/devTools/**)",
+      "Bash(node test_json.js)",
+      "Bash(git add . && git commit -m \"style: update copy buttons and add preserve unicode option to JSON tool\" && git push origin main)"
+    ]
+  }
+}
