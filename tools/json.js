@@ -23,19 +23,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Helper to safely format/compress without converting unicode strings if unchecked
+    // Helper to safely format/compress
     // Native JSON.parse -> JSON.stringify naturally converts \uXXXX to actual characters.
     function stringifyPreservingUnicode(obj, space) {
         let str = JSON.stringify(obj, null, space);
 
-        // If the user WANTS to preserve \uXXXX in the output instead of converting to Chinese characters:
-        // Actually, native JSON.parse converts \uXXXX to real characters.
-        // If they want to KEEP it as \uXXXX in the text, we have to escape the real characters back to \uXXXX.
-        // Wait, the user complaint is: "JSON格式化为啥会把unicode码转换成了中文呢。我不需要转啊"
-        // This means the input had `\u4e2d\u6587` and the output became `中文`.
-        // They want the output to remain `\u4e2d\u6587`.
-        if (cbPreserveUnicode && cbPreserveUnicode.checked) {
-            // Convert non-ASCII characters back to \uXXXX sequences
+        // By default, if the user does NOT check the "Decode Unicode" box,
+        // we should KEEP the output as \uXXXX (re-escape the characters).
+        // If they DO check the box, we let JSON.stringify's natural output remain (which is decoded Chinese characters).
+        const cbDecodeUnicode = document.getElementById('json-preserve-unicode');
+        if (!cbDecodeUnicode || !cbDecodeUnicode.checked) {
+            // Convert non-ASCII characters back to \uXXXX sequences to PRESERVE original escapes
             str = str.replace(/[\u007F-\uFFFF]/g, function(chr) {
                 return "\\u" + ("0000" + chr.charCodeAt(0).toString(16)).substr(-4);
             });
