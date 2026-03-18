@@ -41,6 +41,28 @@ document.addEventListener('DOMContentLoaded', () => {
         return str;
     }
 
+    function extractJsonErrorPosition(errorMessage, text) {
+        // Standard JSON parse errors usually look like "Unexpected token } in JSON at position 123"
+        // or "Unexpected string in JSON at position 45"
+        const match = errorMessage.match(/at position (\d+)/);
+        if (match && match[1]) {
+            const pos = parseInt(match[1], 10);
+            if (!isNaN(pos)) {
+                // Get context around the error
+                const start = Math.max(0, pos - 20);
+                const end = Math.min(text.length, pos + 20);
+                let contextStr = text.substring(start, end);
+
+                // Insert a pointer at the exact error spot
+                const pointerPos = pos - start;
+                contextStr = contextStr.substring(0, pointerPos) + '👇' + contextStr.substring(pointerPos);
+
+                return `\n\nError Context:\n...${contextStr}...`;
+            }
+        }
+        return '';
+    }
+
     function processJson(action) {
         const input = jsonInput.value;
         if (!input.trim()) {
@@ -68,7 +90,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     const obj = JSON.parse(text);
                     updateOutput(stringifyPreservingUnicode(obj, 4));
                 } catch(e) {
-                    updateOutput(text);
+                    // Try to provide error context even if it fails during formatting after unescaping
+                    const context = extractJsonErrorPosition(e.message, text);
+                    updateOutput(`Invalid JSON after unescaping:\n${e.message}${context}`, true);
                 }
                 return;
             }
@@ -92,7 +116,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateOutput(stringifyPreservingUnicode(parsed));
             }
         } catch (e) {
-            updateOutput(`Invalid JSON:\n${e.message}`, true);
+            const context = extractJsonErrorPosition(e.message, input);
+            updateOutput(`Invalid JSON:\n${e.message}${context}`, true);
         }
     }
 

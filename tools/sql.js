@@ -46,7 +46,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 hljs.highlightElement(sqlOutput);
             }
         } catch (e) {
-            sqlOutput.textContent = `Error formatting SQL:\n${e.message}`;
+            let errorMsg = `Error formatting SQL:\n${e.message}`;
+
+            // sql-formatter typically throws errors with line/column info: "Parse error: Unexpected ... at line 5 column 10"
+            // We can try to extract line number to point users to the general area
+            const lineMatch = e.message.match(/line\s+(\d+)/i);
+            if (lineMatch && lineMatch[1]) {
+                const lineNum = parseInt(lineMatch[1], 10);
+                const lines = input.split('\n');
+                if (lineNum > 0 && lineNum <= lines.length) {
+                    const startLine = Math.max(0, lineNum - 3);
+                    const endLine = Math.min(lines.length, lineNum + 2);
+
+                    let context = '\n\nContext around error:\n';
+                    for (let i = startLine; i < endLine; i++) {
+                        const marker = (i + 1 === lineNum) ? '>> ' : '   ';
+                        context += `${marker}${i + 1}: ${lines[i]}\n`;
+                    }
+                    errorMsg += context;
+                }
+            }
+
+            sqlOutput.textContent = errorMsg;
             sqlOutput.classList.add('text-red-500');
             if (btnCopy) btnCopy.classList.add('hidden');
         }
